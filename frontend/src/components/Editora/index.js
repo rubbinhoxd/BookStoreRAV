@@ -6,9 +6,9 @@ export default class Editora extends React.Component {
     super(props);
     //useState
     this.state = {
-      nome: "",
-      endereco: "",
       id: 0,
+      endereco: "",
+      nome: "",
       editoras: [],
     };
   }
@@ -19,7 +19,7 @@ export default class Editora extends React.Component {
   }
   //GET
   handleSearchPublish = () => {
-    fetch("http://localhost:3000/editora/")
+    fetch("http://localhost:8080/editora/")
       .then((response) => response.json())
       .then((data) => {
         this.setState({ editoras: data });
@@ -27,7 +27,7 @@ export default class Editora extends React.Component {
   };
   //DELETE
   handleDeletePublish = (id) => {
-    fetch("http://localhost:3000/editora/" + id, { method: "DELETE" }).then(
+    fetch("http://localhost:8080/editora/" + id, { method: "DELETE" }).then(
       (response) => {
         if (response.ok) {
           this.handleSearchPublish();
@@ -37,7 +37,7 @@ export default class Editora extends React.Component {
   };
   //POST (CRIANDO NOVO)
   handleNewPublish = (editora) => {
-    fetch("http://localhost:3000/editora/", {
+    fetch("http://localhost:8080/editora/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(editora),
@@ -52,29 +52,33 @@ export default class Editora extends React.Component {
   //atualizar dado da editora que ja existe no banco
   handlePublishExisting = (editora) => {
     debugger;
-    fetch("http://localhost:3000/editora/" + editora.id, {
+    fetch("http://localhost:8080/editora/" + editora.id, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(editora),
-    }).then((response) => {
-      console.log(response);
-      if (response.ok) {
-        this.handleSearchPublish();
-      } else {
-        alert("Não foi possível atualizar os dados da  Editora");
-      }
-    });
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.ok) {
+          this.handleSearchPublish();
+        } else {
+          alert("Não foi possível atualizar os dados da  Editora");
+        }
+      })
+      .catch((response) => {
+        console.log(response);
+      });
   };
 
   //get (UPTADE DO QUE JA EXISTE)
   handleUpdatePublish = (id) => {
-    fetch("http://localhost:3000/editora/" + id, { method: "GET" })
+    fetch("http://localhost:8080/editora/" + id, { method: "GET" })
       .then((response) => response.json())
       .then((editora) => {
         this.setState({
-          nome: editora.nome,
-          endereco: editora.endereco,
           id: editora.id,
+          endereco: editora.endereco,
+          nome: editora.nome,
         });
       });
   };
@@ -96,25 +100,25 @@ export default class Editora extends React.Component {
     if (this.state.id === 0) {
       console.log("if1");
       const editora = {
-        nome: this.state.nome,
         endereco: this.state.endereco,
+        nome: this.state.nome,
       };
       this.handleNewPublish(editora); //adiciona uma editora
     } else {
       console.log("if2");
       const editora = {
-        nome: this.state.nome,
-        endereco: this.state.endereco,
         id: this.state.id,
+        endereco: this.state.endereco,
+        nome: this.state.nome,
       };
       this.handlePublishExisting(editora); //uptade das info de uma editora ja criada
     }
   };
   reset = () => {
     this.setState({
-      nome: "",
-      endereco: "",
       id: 0,
+      endereco: "",
+      nome: "",
     });
   };
 

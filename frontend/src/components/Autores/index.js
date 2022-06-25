@@ -6,10 +6,10 @@ export default class Autores extends React.Component {
     super(props);
     //useState
     this.state = {
-      livros: [],
-      nome: "",
-      dataNasc: "",
       id: 0,
+      dataNasc: "",
+      nome: "",
+      livros: [],
       autores: [],
     };
   }
@@ -20,7 +20,7 @@ export default class Autores extends React.Component {
   }
   //BUSCA NA API
   handleSearchAuthor = () => {
-    fetch("http://localhost:3000/autores/")
+    fetch("http://localhost:8080/autor/")
       .then((response) => response.json())
       .then((data) => {
         this.setState({ autores: data });
@@ -28,7 +28,7 @@ export default class Autores extends React.Component {
   };
   //DELETE
   handleDeleteAuthor = (id) => {
-    fetch("http://localhost:3000/autores/" + id, { method: "DELETE" }).then(
+    fetch("http://localhost:8080/autor/" + id, { method: "DELETE" }).then(
       (response) => {
         if (response.ok) {
           this.handleSearchAuthor();
@@ -38,7 +38,7 @@ export default class Autores extends React.Component {
   };
   //POST (CRIANDO NOVO)
   handleNewAuthor = (autor) => {
-    fetch("http://localhost:3000/autores/", {
+    fetch("http://localhost:8080/autor/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(autor),
@@ -53,7 +53,7 @@ export default class Autores extends React.Component {
   //atualizar dado da editora que ja existe no banco
   handleAuthorExisting = (autor) => {
     //debugger;
-    fetch("http://localhost:3000/autores/" + autor.id, {
+    fetch("http://localhost:8080/autor/" + autor.id, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(autor),
@@ -69,14 +69,14 @@ export default class Autores extends React.Component {
 
   //get (UPTADE DO QUE JA EXISTE)
   handleUpdateAuthor = (id) => {
-    fetch("http://localhost:3000/autores/" + id, { method: "GET" })
+    fetch("http://localhost:8080/autor/" + id, { method: "GET" })
       .then((response) => response.json())
       .then((autor) => {
         this.setState({
-          livros: autor.livros,
-          nome: autor.nome,
-          dataNasc: autor.dataNasc,
           id: autor.id,
+          dataNasc: autor.dataNasc,
+          nome: autor.nome,
+          livros: autor.livros,
         });
       });
   };
@@ -104,28 +104,29 @@ export default class Autores extends React.Component {
     if (this.state.id === 0) {
       // console.log("if1");
       const autor = {
-        livros: this.state.livros,
-        nome: this.state.nome,
         dataNasc: this.state.dataNasc,
+        nome: this.state.nome,
+        livros: this.state.livros,
       };
       this.handleNewAuthor(autor); //adiciona um autor
     } else {
       // console.log("if2");
       const autor = {
-        livros: this.state.livros,
-        nome: this.state.nome,
-        dataNasc: this.state.dataNasc,
         id: this.state.id,
+        dataNasc: this.state.dataNasc,
+        nome: this.state.nome,
+        livros: this.state.livros,
       };
       this.handleAuthorExisting(autor); //uptade das info de uma editora ja criada
     }
   };
+
   reset = () => {
     this.setState({
-      livros: [],
-      nome: "",
-      dataNasc: "",
       id: 0,
+      dataNasc: "",
+      nome: "",
+      livros: [],
     });
   };
 

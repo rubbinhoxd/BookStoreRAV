@@ -1,29 +1,18 @@
 {
   "autores": [
     {
-      "livros": "Harry Potter, Brisa Suave",
-      "nome": "Francisco Rubens",
-      "dataNasc": "27-05-1968",
-      "id": 4
-    }
-  ],
-  "editora": [
-    {
-      "nome": "Veja",
-      "endereco": "Rua Tibucio Soares, 909",
+      "livros": "Harry Potter",
+      "nome": "Rubens",
+      "dataNasc": "26/05/1879",
       "id": 1
-    },
-    {
-      "nome": "Unimed",
-      "endereco": "Rua Cloves Viana, 487",
-      "id": 2
     }
   ],
+  "editora": [],
   "livros": [
     {
-      "autores": "José Almeida",
-      "titulo": "Harry Porra",
-      "numPaginas": "8999",
+      "autores": "Rubens Filho",
+      "titulo": "Harry Potter",
+      "numPaginas": "487",
       "idioma": "Português",
       "id": 1
     }
